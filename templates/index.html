@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI News Digest Generator</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="bg-light">
+
+<div class="container py-5">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-primary text-white text-center">
+
+            <h2>📰 AI News Digest Generator</h2>
+
+            <p class="mb-0">
+                Powered by Gemini AI
+            </p>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">Keyword</label>
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="keyword"
+                            placeholder="Technology"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">From Date</label>
+
+                        <input
+                            class="form-control"
+                            type="date"
+                            name="from_date"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">To Date</label>
+
+                        <input
+                            class="form-control"
+                            type="date"
+                            name="to_date"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-4">
+
+                    <button class="btn btn-primary btn-lg px-5">
+                        🔍 Generate Summary
+                    </button>
+
+                </div>
+
+            </form>
+
+            <hr>
+
+            {% if error %}
+            <div class="alert alert-danger">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            {% if summary %}
+
+            <div class="card shadow border-0 mb-4">
+
+                <div class="card-header bg-success text-white">
+
+                    🤖 AI Summary
+
+                </div>
+
+                <div class="card-body">
+
+                    <pre style="white-space:pre-wrap;font-family:inherit;">{{ summary }}</pre>
+
+                    <div class="text-center mt-4">
+                        <a href="/download" class="btn btn-success">
+                            📄 Download Summary as PDF
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+            {% if articles %}
+
+            <h4 class="mb-4">
+                📰 {{ articles|length }} Articles Found
+            </h4>
+
+            <div class="row">
+
+                {% for article in articles %}
+
+                <div class="col-md-6 mb-4">
+
+                    <div class="card shadow h-100">
+
+                        {% if article.urlToImage %}
+
+                        <img
+                            src="{{ article.urlToImage }}"
+                            class="card-img-top"
+                            style="height:220px;object-fit:cover;">
+
+                        {% endif %}
+
+                        <div class="card-body">
+
+                            <h5>{{ article.title }}</h5>
+
+                            <p>
+
+                                {{ article.description }}
+
+                            </p>
+
+                            <p class="text-muted">
+
+                                Published:
+                                {{ article.publishedAt[:10] }}
+
+                            </p>
+
+                        </div>
+
+                        <div class="card-footer bg-white">
+
+                            <a
+                                href="{{ article.url }}"
+                                target="_blank"
+                                class="btn btn-outline-primary w-100">
+
+                                Read Full Article
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

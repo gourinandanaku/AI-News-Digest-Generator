@@ -1,0 +1,30 @@
+body{
+    background:#eef2f7;
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.card-header{
+    border-radius:15px 15px 0 0;
+}
+
+.card-img-top{
+    border-radius:15px 15px 0 0;
+}
+
+.btn{
+    border-radius:10px;
+}
+
+pre{
+    font-family:inherit;
+    font-size:15px;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    transition:.3s;
+}
